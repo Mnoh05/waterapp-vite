@@ -1,11 +1,35 @@
 import React from "react";
 import logo from "../../assets/login/logo-login.jpg";
 import styles from "./Login.module.css"; // Assuming you have a CSS module for styles
+import { useState } from "react";
+import axios from "axios";
 const Login = () => {
+
+const [username, setUsername] = useState("");
+const [password, setPassword] = useState("");
+const [mensaje, setMensaje] = useState("");
+
+const handleLogin = async (e) =>{
+  e.preventDefault(); // Esto es necesario para evitar que la página se recargue al enviar el formulario
+  console.log("EStoy entrando en el handleLogin");
+  try {
+    
+    const response = await axios.post("http://localhost:3000/login", { 
+      username: username,
+      password: password
+      
+    });
+    
+    const rol = response.data.user.rol_name;
+    setMensaje('Bienvenido ' + username + ' con rol ' + rol);
+  } catch (error) {
+    setMensaje('Error al iniciar sesión: ' + error.response.data.error);
+  }
+}
+
   return (
     <div
       className="container d-flex justify-content-center align-items-center"
-      
       style={{ minHeight: "100vh"}}
     >
       <div className="card mb-3" style={{ maxWidth: "900px", width: "100%" }}>
@@ -23,6 +47,8 @@ const Login = () => {
                   type="text"
                   placeholder="Usuario"
                   aria-label="Usuario"
+                  value={username}  
+                  onChange={(e) => setUsername(e.target.value)}
                 />
                 <br />
                 <label>Contraseña</label>
@@ -31,18 +57,21 @@ const Login = () => {
                   type="password"
                   placeholder="Contraseña"
                   aria-label="Contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <br />
-                <button className="btn btn-primary w-50" type="submit">
+                <button className="btn btn-primary w-50" type="submit" onClick={handleLogin}>
                   Acceder
                 </button>
+                <p>{mensaje}</p>
               </form>
-              <p className="card-text mt-3">
+              <div className="card-text mt-3">
                 <div className="login-right">
                   <hr />
                   <p>¿Perdiste tu contraseña?</p>
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         </div>
