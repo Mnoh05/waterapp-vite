@@ -4,7 +4,13 @@
 const express = require('express'); //Importa el módulo de Express, un framework de Node.js que facilita la creación de servidores web.
 const app = express(); //Crea una aplicación Express.
 const port = 3000; 
-const connection = require('./config/db.js'); //Importa la función de conexión a la base de datos desde el archivo db.js.
+const {connection} = require('./config/db.js'); 
+
+app.use(express.json());
+
+const loginRoutes = require('./routes/loginRoutes.js')
+
+app.use('/api/login', loginRoutes);
 
 app.get('/', (req, res) => {    //Define una ruta GET para la API en '/api/data'.
     res.json({ message: 'Hola desde el backend!' }); 
