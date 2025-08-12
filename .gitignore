@@ -29,3 +29,7 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+#ignorar configuracion sensible
+**/config/config.js
+**/config/config.json
