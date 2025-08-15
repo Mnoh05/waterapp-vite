@@ -28,7 +28,7 @@ const login = async (req, res) => {
     return res.status(200).json({message:"Usuario encontrado"})
 
   } catch (error) {
-    console.error(error);
+    console.error(error); 
     res.status(500).json({ message: "Error en el servidor" });
   }
 };

@@ -2,6 +2,8 @@
 require('dotenv').config(); // Importa el módulo dotenv para cargar las variables de entorno desde un archivo .env.
 const createUserModel = require('../models/User'); // Importa la función para crear el modelo de usuario desde el archivo User.js.
 const createUserRoleModel = require('../models/UserRoles');
+const createIncidenciaModel = require('../models/Incidencia')
+const createModuloModel = require('../models/Modulo')
 const {Sequelize, where} = require('sequelize'); // Importa el módulo pg para manejar la conexión a la base de datos PostgreSQL.
 
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
@@ -13,12 +15,23 @@ const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, pr
 
    const userModel = createUserModel(sequelize);
    const userRol = createUserRoleModel(sequelize);
+   const modulo = createModuloModel(sequelize);
+   const incidencia = createIncidenciaModel(sequelize);
 
 
     //Relaciones un usuario puede tener solo un rol
     userModel.belongsTo(userRol, { foreignKey: 'rol_id' });
     // Un rol puede tener muchos usuarios
     userRol.hasMany(userModel, { foreignKey: 'rol_id' });
+    //un chofer puede tener varios modulos 
+    userModel.hasMany(modulo,{foreignKey:'chofer_id', as:'modulos'});
+    //un modulo puede tener solo un chofer
+    modulo.belongsTo(userModel,{foreignKey:'chofer_id', as: 'chofer'})
+    //un modulo puede tener varias incidencias
+    modulo.hasMany(incidencia,{foreignKey:'modulo_id', as: 'incidencias'});
+    //una incidencia puede tene un modulo
+    incidencia.belongsTo(modulo,{foreignKey:'modulo_id', as:'moduloIncidencia'});
+    
 
 async function connection() {
   try {
