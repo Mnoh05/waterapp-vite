@@ -38,16 +38,9 @@ async function connection() {
       });
     }
 
-    const rolChofer = await userRol.findOne({ where: { rolName: 'chofer' } });
-    const rolSoporte = await userRol.findOne({ where: { rolName: 'soporte' } });
-    const rolAdmin = await userRol.findOne({ where: { rolName: 'admin' } });
-    const usuario3 = await userModel.create({user: 'nabril',nameUser: 'abril', lastNameUser: 'nahuat', email: 'mnahuat@example.com', rol_id: rolSoporte.rolId, password: '12345'});
-
-    if(rolChofer){
-      const usuario2 = await userModel.create({user: 'ssanchez',nameUser: 'sara', lastNameUser: 'sanchez', email: 'ssanchez@example.com', rol_id: rolChofer.rolId, password: '12345'});
-    }
-    const usuario = await userModel.create({user: 'mnoh',nameUser: 'maria', lastNameUser: 'noh', email: 'jmnoh@example.com', rol_id: rolAdmin.rolId, password: '1234'});
-    
+    // const rolChofer = await userRol.findOne({ where: { rolName: 'chofer' } });
+    // const rolSoporte = await userRol.findOne({ where: { rolName: 'soporte' } });
+    // const rolAdmin = await userRol.findOne({ where: { rolName: 'admin' } });
 
   } catch (error) {
     console.error('No se pudo conectar a la base de datos:', error); // Mensaje de error si falla la conexión.
