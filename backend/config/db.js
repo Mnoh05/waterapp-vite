@@ -62,4 +62,4 @@ async function connection() {
 
 
 
-module.exports = {userModel, userRol, connection}
+module.exports = {userModel, userRol, modulo, incidencia, connection}

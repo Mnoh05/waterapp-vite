@@ -35,11 +35,8 @@ const login = async (req, res) => {
 
 const createNewUser = async (req, res) => {
 
-  console.log("create nuevo usuario")
-
   try {
     const {user, nameUser, lastNameUser, email, rol_id, password} = req.body;
-    console.log(user, nameUser, lastNameUser, email, rol_id, password);
 
     const newUser = await createUser (user, nameUser, lastNameUser, email, rol_id, password);
 
