@@ -11,18 +11,6 @@ const createModulo = async (nameModulo, latitud, longitud, chofer_id) => {
     });
 
      return newModulo;
-
-  // try {
-  //   const newModulo = await modulo.create({
-  //     nameModulo,
-  //     latitud,
-  //     longitud,
-  //     chofer_id,
-  //   });
-  //   return newModulo;
-  // } catch (error) {
-  //   return error.message;
-  // }
 };
 
 const allModulos = async () => {

@@ -4,7 +4,7 @@ const createUserModel = require('../models/User'); // Importa la función para c
 const createUserRoleModel = require('../models/UserRoles');
 const createIncidenciaModel = require('../models/Incidencia')
 const createModuloModel = require('../models/Modulo')
-const {Sequelize, where} = require('sequelize'); // Importa el módulo pg para manejar la conexión a la base de datos PostgreSQL.
+const {Sequelize} = require('sequelize'); // Importa el módulo pg para manejar la conexión a la base de datos PostgreSQL.
 
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
@@ -20,9 +20,9 @@ const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, pr
 
 
     //Relaciones un usuario puede tener solo un rol
-    userModel.belongsTo(userRol, { foreignKey: 'rol_id' });
+    userModel.belongsTo(userRol, { foreignKey: 'rol_id', as:"roles" });
     // Un rol puede tener muchos usuarios
-    userRol.hasMany(userModel, { foreignKey: 'rol_id' });
+    userRol.hasMany(userModel, { foreignKey: 'rol_id', as: "usuarios" });
     //un chofer puede tener varios modulos 
     userModel.hasMany(modulo,{foreignKey:'chofer_id', as:'modulos'});
     //un modulo puede tener solo un chofer
@@ -30,7 +30,7 @@ const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, pr
     //un modulo puede tener varias incidencias
     modulo.hasMany(incidencia,{foreignKey:'modulo_id', as: 'incidencias'});
     //una incidencia puede tene un modulo
-    incidencia.belongsTo(modulo,{foreignKey:'modulo_id', as:'moduloIncidencia'});
+    incidencia.belongsTo(modulo,{foreignKey:'modulo_id', as:'modulosI'});
     
 
 async function connection() {

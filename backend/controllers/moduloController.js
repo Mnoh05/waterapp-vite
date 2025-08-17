@@ -12,7 +12,7 @@ const createNewModulo = async (req, res) => {
     const chofer = await userModel.findByPk(chofer_id);
 
     if (!chofer) {
-      return res.status(404).json({ error: "modulo no encontrado" });
+      return res.status(404).json({ error: "Chofer no encontrado" });
     }
 
     const newModulo = await createModulo(
