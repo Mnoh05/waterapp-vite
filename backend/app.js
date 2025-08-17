@@ -2,14 +2,16 @@ require("dotenv").config();
 const express = require("express"); //Importa el módulo de Express, un framework de Node.js que facilita la creación de servidores web.
 const app = express(); //Crea una aplicación Express.
 const port = 3000;
-const { connection } = require("./config/db.js");
+const { connection, modulo } = require("./config/db.js");
 app.use(express.json());
 
 const loginRoutes = require("./routes/loginRoutes.js");
+const modulosRoutes = require("./routes/moduloRoutes.js");
 
 //endpoints
 
 app.use("/api/login", loginRoutes);
+app.use("/api/modulos", modulosRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hola desde el backend!" });
