@@ -25,4 +25,12 @@ const createUser = async (user, nameUser, lastNameUser, email, rol_id, password)
 
 }
 
-module.exports = {getUserLogin, createUser}
+const changePassword = async(usuario, user_id, newPassword) =>{
+
+   const nuevaHash = await bcrypt.hash(newPassword, 10);
+    await usuario.update({ password: nuevaHash });
+return nuevaHash;
+
+}
+
+module.exports = {getUserLogin, createUser, changePassword}

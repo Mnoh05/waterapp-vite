@@ -1,6 +1,6 @@
 
 const jwt = require("jsonwebtoken");
-const { createUser, getUserLogin} = require ('../handlers/loginHandler.js')
+const { createUser, getUserLogin, changePassword} = require ('../handlers/loginHandler.js')
 const { userModel } = require("../config/db.js"); // Importa el modelo de usuario desde la configuración de la base de datos.
 const bcrypt = require("bcrypt");
 
@@ -43,8 +43,35 @@ const createNewUser = async (req, res) => {
     return res.status(200).json(newUser);
 
   } catch (error) {
-    return res.status(404).json({message: "Error al crear el usuario"})
+    return res.status(404).json({message: "Error al crear el usuario"});
   }
 }
 
-module.exports = { login, createNewUser };
+const resetPassword = async (req, res) => {
+  const { user_id,  newPassword } = req.body;
+  if (!user_id || !newPassword) {
+    return res.status(400).json({ message: 'Faltan datos requeridos' });
+  }
+
+  try {
+      const usuario = await userModel.findByPk(user_id);
+
+      const coincide = await bcrypt.compare(newPassword, usuario.password)
+
+      if(coincide){
+        return res.status(400).json({ message: 'La nueva contraseña es la misma que la anterior' });
+      }
+
+      if (!usuario) {
+      return res.status(404).json({ message: 'Usuario no encontrado' }); }
+
+      const nuevoPassword = await changePassword(usuario, user_id, newPassword);
+      res.status(200).json(nuevoPassword, { message: 'Contraseña actualizada correctamente' });
+    
+  } catch (error) {
+    return res.status(404).json({message: "Error al crear el usuario"});
+  }
+  
+}
+
+module.exports = { login, createNewUser, resetPassword };
