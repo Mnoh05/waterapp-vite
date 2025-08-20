@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express"); //Importa el módulo de Express, un framework de Node.js que facilita la creación de servidores web.
 const app = express(); //Crea una aplicación Express.
+const cors = require('cors');//Sirve para permitir (o bloquear) el acceso de tu frontend (ej: http://localhost:5173) a tu backend (ej: http://localhost:3000).
 const port = 3000;
 const { connection} = require("./config/db.js");
 app.use(express.json());
@@ -8,6 +9,12 @@ app.use(express.json());
 const loginRoutes = require("./routes/loginRoutes.js");
 const modulosRoutes = require("./routes/moduloRoutes.js");
 const incidenciaRoutes = require("./routes/incidenciaRoutes.js");
+
+app.use(cors({
+  origin: 'http://localhost:5173', // o '*' para permitir todos
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 
 //endpoints
 

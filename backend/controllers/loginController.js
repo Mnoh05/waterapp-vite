@@ -6,26 +6,27 @@ const bcrypt = require("bcrypt");
 
 const login = async (req, res) => {
   const { user, password } = req.body;
+  console.log(user, password, "Holas desde el back")
   try {
     // Verifica si el usuario existe
     const usuario = await getUserLogin(user); 
     if (!usuario) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      return res.status(404).json({ message: "Verifica tu usuario" });
     }
-
+    console.log("Usuario encontrado en el front:", usuario);
     //para validar la contraseña
     const coincide = await bcrypt.compare(password, usuario.password) //Primero va la contraseña plana y lueho el que esta encriptado
     if(!coincide){
       return res.status(404).json({message: "Contraseña incorrecta"});
     }
 
-    // const token = jwt.sign(
-    //   { id: usuario.id, role: usuario.rol_id },
-    //   process.env.JWT_SECRET,
-    //   { expiresIn: "1h" }
-    // );
-    // res.json({ token });
-    return res.status(200).json({message:"Usuario encontrado"})
+    const token = jwt.sign(
+      { id: usuario.id, role: usuario.rol_id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    
+    return res.status(200).json({token, id: usuario.id, role: usuario.rol_id })
 
   } catch (error) {
     console.error(error); 

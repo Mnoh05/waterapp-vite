@@ -3,27 +3,51 @@ import logo from "../../assets/login/logo-login.jpg";
 import styles from "./Login.module.css"; // Assuming you have a CSS module for styles
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
-
+const navigate = useNavigate();
 const [username, setUsername] = useState("");
 const [password, setPassword] = useState("");
 const [mensaje, setMensaje] = useState("");
 
 const handleLogin = async (e) =>{
   e.preventDefault(); // Esto es necesario para evitar que la página se recargue al enviar el formulario
-  console.log("EStoy entrando en el handleLogin");
+
   try {
-    
-    const response = await axios.post("http://localhost:3000/login", { 
-      username: username,
+
+    //Peticion para poder acceder a la informacion de la base de datos/ para el inicio de sesion
+    const response = await axios.post("http://localhost:3000/api/login", { 
+      user: username, //envia al back los datos que se almacenaron en el login del front, para poder hacer el incio de sesion
       password: password
       
+    }) .then(response =>{
+      const {token, id, role} = response.data //Guarda los datos que retorn a mi api, para validar a que pagina redirigir
+      localStorage.setItem('token',token);
+      localStorage.setItem('id_usuario',id);
+      localStorage.setItem('rol_id', role);
+
+      if(id === 1 || id ===5){
+        console.log("Hola admin")
+        navigate("/admin/dashboard")
+      }else{
+        navigate("/dashboard")
+        console.log("No eres admin :( ")
+      }
     });
     
-    const rol = response.data.user.rol_name;
-    setMensaje('Bienvenido ' + username + ' con rol ' + rol);
+
+    setMensaje('Bienvenido ' + username);
   } catch (error) {
-    setMensaje('Error al iniciar sesión: ' + error.response.data.error);
+ if (error.response) {
+    // Aqui se accede al mensaje que ennvia mi api
+    const mensaje = error.response.data.message;
+    console.log('Error de login:', mensaje);
+
+    setMensaje(mensaje); // para mostrar los mensajes
+  } else {
+    console.log('Error inesperado:', error.message);
+  }
+
   }
 }
 
@@ -40,7 +64,7 @@ const handleLogin = async (e) =>{
           <div className="col-md-7">
             <div className="card-body">
               <h5 className="card-title">Bienvenido</h5>
-              <form>
+              <form onSubmit={handleLogin}>
                 <label>Usuario</label>
                 <input
                   className="form-control me-2"
@@ -61,7 +85,7 @@ const handleLogin = async (e) =>{
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <br />
-                <button className="btn btn-primary w-50" type="submit" onClick={handleLogin}>
+                <button className="btn btn-primary w-50" type="submit">
                   Acceder
                 </button>
                 <p>{mensaje}</p>
@@ -69,7 +93,7 @@ const handleLogin = async (e) =>{
               <div className="card-text mt-3">
                 <div className="login-right">
                   <hr />
-                  <p>¿Perdiste tu contraseña?</p>
+                  <p>¿Olvidaste tu contraseña?</p>
                 </div>
               </div>
             </div>
