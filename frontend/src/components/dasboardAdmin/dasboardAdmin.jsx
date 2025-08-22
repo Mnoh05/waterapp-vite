@@ -1,13 +1,14 @@
-import React from 'react'
+import React from "react";
+
+import Navbar from "../navbar/Navbar";
 
 const dasboardAdmin = () => {
-    const getToken = () => localStorage.getItem('rol_id');
-    const rol =getToken();
-    console.log(rol, "Quien soy, en dashboard admin")
   return (
+    <div>
+      <Navbar />
+      <p className="fs-2">dasboardAdmin</p> 
+    </div>
+  );
+};
 
-    <div>dasboardAdmin</div>
-  )
-}
-
-export default dasboardAdmin
+export default dasboardAdmin;

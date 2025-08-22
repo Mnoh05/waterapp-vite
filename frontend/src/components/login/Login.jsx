@@ -4,52 +4,49 @@ import styles from "./Login.module.css"; // Assuming you have a CSS module for s
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../hooks/authContext';
+
 const Login = () => {
 const navigate = useNavigate();
+const {setUser}= useAuth();
 const [username, setUsername] = useState("");
 const [password, setPassword] = useState("");
 const [mensaje, setMensaje] = useState("");
 
-const handleLogin = async (e) =>{
-  e.preventDefault(); // Esto es necesario para evitar que la página se recargue al enviar el formulario
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-  try {
-
-    //Peticion para poder acceder a la informacion de la base de datos/ para el inicio de sesion
-    const response = await axios.post("http://localhost:3000/api/login", { 
-      user: username, //envia al back los datos que se almacenaron en el login del front, para poder hacer el incio de sesion
-      password: password
-      
-    }) .then(response =>{
-      const {token, id, role} = response.data //Guarda los datos que retorn a mi api, para validar a que pagina redirigir
-      localStorage.setItem('token',token);
-      localStorage.setItem('id_usuario',id);
-      localStorage.setItem('rol_id', role);
-
-      if(id === 1 || id ===5){
-        console.log("Hola admin")
-        navigate("/admin/dashboard")
-      }else{
-        navigate("/dashboard")
-        console.log("No eres admin :( ")
-      }
+  try {//Api del back para los usuarios
+    const response = await axios.post("http://localhost:3000/api/login", {
+      user: username,
+      password: password,
     });
     
+    const { token, id, role } = response.data; //extrae info de la 
 
-    setMensaje('Bienvenido ' + username);
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("id_usuario", response.data.id);
+    localStorage.setItem("rol_id", response.data.role);
+    
+    setUser({id: response.data.id, role: response.data.role})
+    
+    setMensaje("Bienvenido " + username);
+
+    if (id === 1 || id === 5) { 
+      navigate("/admin/dashboard");
+    } else { 
+      navigate("/dashboard");
+    }
   } catch (error) {
- if (error.response) {
-    // Aqui se accede al mensaje que ennvia mi api
-    const mensaje = error.response.data.message;
-    console.log('Error de login:', mensaje);
-
-    setMensaje(mensaje); // para mostrar los mensajes
-  } else {
-    console.log('Error inesperado:', error.message);
+    if (error.response) {
+      const mensaje = error.response.data.message;
+      setMensaje(mensaje);
+    } else {
+      console.log("Error inesperado:", error.message);
+    }
   }
+};
 
-  }
-}
 
   return (
     <div

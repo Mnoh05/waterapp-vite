@@ -1,12 +1,13 @@
 import React from 'react'
+import Navbar from '../navbar/Navbar';
 
 const dashboardChofer = () => {
-    const getToken = () => localStorage.getItem('rol_id');
-    const rol =getToken();
-    console.log(rol, "Quien soy, en dashboard chofer");
-    console.log("Holaaa, en dashboard chofer")
+
   return (
-    <div>Hola desde dashboardChofer</div>
+    <div className='container'>
+      <Navbar />
+      <p className="fs-2">dasboard Chofer</p> 
+    </div>
   )
 }
 
