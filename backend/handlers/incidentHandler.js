@@ -13,11 +13,24 @@ const allIncidents = async() => {
     try {
 
         const incidents = await incidencia.findAll({
-            include: {
+            include: [
+            {
             model: modulo,
-            as:'modulosI',
-            attributes:['nameModulo']
-    }})
+            as:'modulo',
+            attributes: ['id', 'nameModulo', 'chofer_id'],
+            include :[
+                {
+                    model: userModel,
+                    as: 'chofer',
+                    attributes: ['id', 'nameUser', 'lastNameUser', 'email']
+                }
+            ]
+            }
+
+        ],
+         logging: console.log
+
+    })
     console.log(incidents,"Aqui estoyyyyyy")
     return incidents;
         

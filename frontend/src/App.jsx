@@ -6,6 +6,7 @@ import Dashboard from './components/dashboardChofer/dashboardChofer.jsx'
 import ErrorPage from './components/errorPage/errorPage.jsx';
 import PrivateRoute from './components/utils/privateRoute.jsx';
 import Home from './components/dasboardAdmin/pages/home.jsx';
+import Incidencias from './components/dasboardAdmin/pages/Incidencias.jsx';
 import { AuthProvider } from './components/hooks/authContext.jsx';
 
 
@@ -24,6 +25,7 @@ function App() {
         <Route element={< PrivateRoute  allowedRole={["1", "5"]}/>} >
           <Route path="/admin/dashboard" element={< DashboardAdmin/>}/>
           <Route path="/admin/home" element={< Home/>}/>
+          <Route path="/admin/incidencias" element={< Incidencias/>}/>
         </Route>
 
         <Route element={< PrivateRoute  allowedRole={["4"]}/>} >

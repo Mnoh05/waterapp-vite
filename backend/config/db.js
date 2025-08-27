@@ -30,7 +30,7 @@ const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, pr
     //un modulo puede tener varias incidencias
     modulo.hasMany(incidencia,{foreignKey:'modulo_id', as: 'incidencias'});
     //una incidencia puede tene un modulo
-    incidencia.belongsTo(modulo,{foreignKey:'modulo_id', as:'modulosI'});
+    incidencia.belongsTo(modulo,{foreignKey:'modulo_id', as:'modulo'});
     
 
 async function connection() {

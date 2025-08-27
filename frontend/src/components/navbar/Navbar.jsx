@@ -1,10 +1,21 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
+import { useState } from "react";
 
-const Navbar = () => {
+const Navbar = ({onSearch}) => {
   const { setUser } = useAuth();
   const navigate = useNavigate();
+  const [input, setInput] = useState('');
+
+  
+
+  const handleSubmit = (e) => {
+    console.log(e,input, "Hola desde la nav")
+  e.preventDefault();
+  onSearch(input); // Llama a la función del padre
+};
+
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
@@ -13,6 +24,14 @@ const Navbar = () => {
 
     setUser(null);
     navigate("/");
+  };
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      navigate("/admin/dashboard");
+    }
   };
   return (
     <div className="mb-2">
@@ -35,8 +54,21 @@ const Navbar = () => {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li>
+                <button
+                  className="btn btn-outline-secondary"
+                  style={{ border: 'none' }}
+                  onClick={handleBack}
+                >
+                  ← Regresar
+                </button>
+              </li>
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/admin/home">
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/admin/home"
+                >
                   Home
                 </Link>
               </li>
@@ -77,25 +109,31 @@ const Navbar = () => {
                 </ul>
               </li>
               <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">
-                  Disabled
-                </a>
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/admin/incidencias"
+                >
+                  Incidencias
+                </Link>
               </li>
             </ul>
 
-            <form className="d-flex" role="search">
+            <form onSubmit={handleSubmit} className="d-flex" role="search">
               <input
                 className="form-control me-2"
-                type="search"
-                placeholder="Search"
+                type="text"
+                value={input}
+                onChange={(e)=> setInput(e.target.value)}
+                placeholder="Buscar"
                 aria-label="Search"
               />
               <button className="btn btn-outline-success" type="submit">
-                Search
+                Buscar
               </button>
             </form>
             <div>
-              <button onClick={handleLogOut}>Cerrar Sesión</button>
+              <button onClick={handleLogOut} className="btn btn-outline-secondary" style={{ border: 'none' }}>Cerrar Sesión</button>
             </div>
           </div>
         </div>
