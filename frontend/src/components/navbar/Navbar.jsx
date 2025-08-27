@@ -85,26 +85,35 @@ const Navbar = ({onSearch}) => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Dropdown
+                  Módulos
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
+                <Link
+                  className="dropdown-item"
+                  aria-current="page"
+                  to="/admin/modulos"
+                >
+                  Ver módulos
+                </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
+                <Link
+                  className="dropdown-item"
+                  aria-current="page"
+                  to="/admin/agregar-modulo"
+                >
+                  Agregar Módulo
+                </Link>
                   </li>
                   <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
+                <Link
+                  className="dropdown-item"
+                  aria-current="page"
+                  to="/admin/editar-modulo"
+                >
+                  Editar Módulo
+                </Link>
                   </li>
                 </ul>
               </li>

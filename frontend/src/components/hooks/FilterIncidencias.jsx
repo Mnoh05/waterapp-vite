@@ -5,9 +5,6 @@ const FilterIncidencias = ({searchItem, incidencias}) => {
     
     const normaliza = (texto) => (texto ?? '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     
- 
-  
-    
         const filtro = incidencias.filter((item) => 
         
             item.modulo.nameModulo === searchItem
@@ -20,14 +17,14 @@ const FilterIncidencias = ({searchItem, incidencias}) => {
   return (
     <div>
       <div className="container pt 4">
-        <p className="fs-2"> Incidencias filtradas</p>
+        
         {
          hayIncidencias ? (
                 <table className="table table-striped table-bordered">
                     <thead>
                         <tr>
                           
-                          <th>Id Incidencia</th>
+                          <th>No.</th>
                           <th>Módulo</th>
                           <th>Chofer</th>
                           <th>Descripcion</th>
@@ -54,7 +51,7 @@ const FilterIncidencias = ({searchItem, incidencias}) => {
                     <thead>
                         <tr>
                           
-                          <th>Id Incidencia</th>
+                          <th>No.</th>
                           <th>Módulo</th>
                           <th>Chofer</th>
                           <th>Descripcion</th>

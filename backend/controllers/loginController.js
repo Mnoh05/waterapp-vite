@@ -1,6 +1,6 @@
 
 const jwt = require("jsonwebtoken");
-const { createUser, getUserLogin, changePassword} = require ('../handlers/loginHandler.js')
+const { createUser, getUserLogin, changePassword, allUsersChoferes} = require ('../handlers/loginHandler.js')
 const { userModel } = require("../config/db.js"); // Importa el modelo de usuario desde la configuración de la base de datos.
 const bcrypt = require("bcrypt");
 
@@ -33,6 +33,16 @@ const login = async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 };
+
+const allUserChofer =async(req, res) =>{
+  try {
+    const users = await allUsersChoferes();
+    return res.status(200).json(users);
+    
+  } catch (error) {
+    return res.status(404).json({message: "Error taer todos los usuarios"});
+  }
+}
 
 const createNewUser = async (req, res) => {
 
@@ -75,4 +85,4 @@ const resetPassword = async (req, res) => {
   
 }
 
-module.exports = { login, createNewUser, resetPassword };
+module.exports = { login, createNewUser, resetPassword, allUserChofer };

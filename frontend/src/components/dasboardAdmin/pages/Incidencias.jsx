@@ -38,13 +38,20 @@ const handleSearch = (valor) => {
   setSearchItem(valor);
 }
 
+const handleAll = () => {
+  setSearchItem(null);
+  <FilterIncidencias searchItem={searchItem} incidencias={incidencias} />
+}
+
 
   const hayIncidencias = Array.isArray(incidencias) && incidencias.length > 0; //para evitar el valor null del array
   return (
     <div>
       <Navbar onSearch={handleSearch}/>
+      <button  onClick={handleAll}>Todas las incidencias</button>
+      <p className="fs-2"> Incidencias</p>
       <FilterIncidencias searchItem={searchItem} incidencias={incidencias} />
-
+      
       {/* <div className="container pt 4">
         <p className="fs-2">Soy de Prueba en incidencias</p>
         {loading ? (
@@ -60,44 +67,6 @@ const handleSearch = (valor) => {
         )}
         
       </div> */}
-      <div className="container pt 4">
-        <p className="fs-2"> Incidencias</p>
-        {
-            loading ? (
-                <p>CArgandoo....</p>
-            ) : hayIncidencias ? (
-                <table className="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                          
-                          <th>Id Incidencia</th>
-                          <th>Módulo</th>
-                          <th>Chofer</th>
-                          <th>Descripcion</th>
-                          <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { incidencias.map((item, index)=> (
-                            <tr key={item.id}>
-                                <td>{index  + 1}</td>
-                                <td>{item.modulo?.nameModulo}</td>
-                                <td>{item.modulo?.chofer.nameUser + ' ' + item.modulo?.chofer.lastNameUser} </td>
-                                <td>{item.description}</td>
-                                {/* <td>{item.updatedAt}</td> */}
-                                <td>{dayjs(item.updatedAt).format('YYYY-MM-DD HH:mm:ss')}</td>
-                            </tr>
-                        ))
-
-                        }
-                    </tbody>
-                </table>
-            ) : (
-          <p>No hay incidencias registradas.</p>
-        )
-        }
-
-      </div>
     </div>
   );
 };
