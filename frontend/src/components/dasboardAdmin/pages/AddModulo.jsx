@@ -8,7 +8,6 @@ import { useAuth } from '../../hooks/authContext.jsx';
 const AddModulo = () => {
   const {choferes} = useAuth();
 
-// const [chofere, setChoferes] = useState([]);
 const [formulario, setFormulario] = useState({
   nameModulo: '',
   latitud: '',
@@ -16,21 +15,6 @@ const [formulario, setFormulario] = useState({
   chofer_id:''
 });
 
-// useEffect(() => {//api paraa traer los choferes y poder mostrarlo en el select del formulario
-//   const allChoferes = async () => {
-//     try {
-//       const response = await axios.get("http://localhost:3000/api/login/users-choferes");
-//       setChoferes(response.data);
-      
-//     } catch (error) {
-//       console.error(
-//         "Error al obtener los choferes:",
-//         error.response?.data?.message || error.message
-//       );
-//     } 
-//   };
-//   allChoferes();
-// }, []);
 
 const handleChangeFormulario = (e) => { //accion para poder almacenar la informacion de los inputs en el estado de formulario para crear el nuevo modulo
   const { name, value } = e.target;
@@ -64,6 +48,8 @@ const handleSubmit = async (e) =>{ //accion que envia la informacion a mi api pa
     <div>
       <div className="container pt 4">
         <Navbar />
+        <h2>Agregar Módulo</h2>
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="nameModulo" className="form-label">

@@ -76,6 +76,7 @@ const EditModulo = () => {
     <div>
       <div className="container pt 4">
         <Navbar />
+        <h2>Editar Módulo</h2>
         <form onSubmit={handleSubmit}>
           {modulos.length > 0 && (
             <div className="mb-3">

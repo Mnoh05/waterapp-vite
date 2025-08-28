@@ -11,6 +11,7 @@ const ViewModulo = () => {
   return (
     <div>
       <Navbar />
+      <h2>Módulos</h2>
       <div className="container pt 4">
         <table className="table table-striped table-bordered">
           <thead>

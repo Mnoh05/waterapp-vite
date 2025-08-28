@@ -1,15 +1,16 @@
-import React from 'react'
-import Navbar from '../../navbar/Navbar'
-import { useAuth } from "../../hooks/authContext.jsx"; 
+import React from "react";
+import Navbar from "../../navbar/Navbar";
+import { useAuth } from "../../hooks/authContext.jsx";
 
 const ViewChoferes = () => {
-const {choferes} = useAuth();
+  const { choferes } = useAuth();
 
-console.log(choferes)
+  console.log(choferes);
   return (
     <div>
-        <Navbar />
-              <div className="container pt 4">
+      <Navbar />
+      <h2>Choferes</h2>
+      <div className="container pt 4">
         <table className="table table-striped table-bordered">
           <thead>
             <tr>
@@ -23,9 +24,7 @@ console.log(choferes)
             {choferes.map((item, index) => (
               <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>
-                  {item.nameUser + " " + item.lastNameUser}{" "}
-                </td>
+                <td>{item.nameUser + " " + item.lastNameUser} </td>
                 <td>{item.email}</td>
                 <td>{item.user}</td>
               </tr>
@@ -33,9 +32,8 @@ console.log(choferes)
           </tbody>
         </table>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default ViewChoferes
+export default ViewChoferes;
