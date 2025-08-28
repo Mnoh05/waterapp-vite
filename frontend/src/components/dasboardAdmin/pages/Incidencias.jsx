@@ -16,7 +16,6 @@ useEffect(() => {
   const allIncidencias = async () => {
     try {
       const response = await axios.get("http://localhost:3000/api/incidencia");
-      console.log("Datos recibidos:", response.data);
       setIncidencias(response.data);
       
     } catch (error) {
@@ -28,13 +27,10 @@ useEffect(() => {
       setLoading(false);
     }
   };
-  console.log(incidencias.data)
   allIncidencias();
 }, []);
 
 const handleSearch = (valor) => {
-   console.log("Valor recibido desde Navbar:", valor);
-
   setSearchItem(valor);
 }
 

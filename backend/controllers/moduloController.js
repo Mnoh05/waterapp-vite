@@ -66,6 +66,8 @@ const findModuloByID = async (req, res) => {
 const editModulo = async (req, res) => {
   const { id, chofer_id, newChofer } = req.body;
 
+  const nuevoId = parseInt(newChofer);
+
   if (!id || isNaN(id)) {
     //valida que el id que se ingrese sea un valor valido
     return res.status(404).json({ message: "Modulo no encontrado" });
@@ -79,6 +81,11 @@ const editModulo = async (req, res) => {
     //valida que el id que se ingrese sea un valor valido
     return res.status(404).json({ message: "Chofer nuevo no es válido" });
   }
+
+  if (chofer_id === nuevoId) {
+  return res.status(404).json({ message: "No puede ser el mismo chofer" });
+}
+
 
   try {
     const editModuloChofer = await editModuloC(id, chofer_id, newChofer);
