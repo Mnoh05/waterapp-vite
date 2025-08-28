@@ -72,10 +72,36 @@ const Navbar = ({onSearch}) => {
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Choferes
                 </a>
+                <ul className="dropdown-menu">
+                  <li>
+                <Link
+                  className="dropdown-item"
+                  aria-current="page"
+                  to="/admin/choferes"
+                >
+                  Ver choferes
+                </Link>
+                  </li>
+                  <li>
+                <Link
+                  className="dropdown-item"
+                  aria-current="page"
+                  to="/admin/agregar-chofer"
+                >
+                  Agregar Chofer
+                </Link>
+                  </li>
+                </ul>
               </li>
               <li className="nav-item dropdown">
                 <a

@@ -19,7 +19,7 @@ const allModulos = async () => {
       include:{
         model: userModel,
         as:'chofer',
-        attributes: ['id','user','nameUser', 'email']
+        attributes: ['id','user','nameUser', 'lastNameUser', 'email']
       }
   });
     return allModulos;

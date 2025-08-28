@@ -13,6 +13,8 @@ import EditModulo from './components/dasboardAdmin/pages/EditModulo.jsx';
 import AddModulo from './components/dasboardAdmin/pages/AddModulo.jsx';
 
 import './App.css'
+import AddChofer from './components/dasboardAdmin/pages/AddChofer.jsx';
+import ViewChoferes from './components/dasboardAdmin/pages/ViewChoferes.jsx';
 
 
 function App() {
@@ -32,6 +34,9 @@ function App() {
           <Route path='/admin/modulos' element={ <ViewModulo /> }/>
           <Route path='/admin/editar-modulo' element={ <EditModulo />} />
           <Route path='/admin/agregar-modulo' element={<AddModulo />}/>
+          <Route path='/admin/agregar-chofer' element={<AddChofer /> } />
+          <Route path='/admin/choferes' element={<ViewChoferes />}/>
+
         </Route>
 
         <Route element={< PrivateRoute  allowedRole={["4"]}/>} >

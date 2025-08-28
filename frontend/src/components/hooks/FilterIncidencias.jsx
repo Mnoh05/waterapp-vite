@@ -11,7 +11,6 @@ const FilterIncidencias = ({searchItem, incidencias}) => {
             
         );
 
-
    
     const hayIncidencias = Array.isArray(filtro) && filtro.length > 0; //para evitar el valor null del array
   return (
