@@ -1,4 +1,4 @@
-const { modulo, userModel } = require("../config/db.js");
+const { modulo, userModel, tiempo } = require("../config/db.js");
 
 const createModulo = async (nameModulo, latitud, longitud, chofer_id) => {
   nameModulo = nameModulo.toLowerCase();
@@ -16,11 +16,18 @@ const createModulo = async (nameModulo, latitud, longitud, chofer_id) => {
 const allModulos = async () => {
   try {
     const allModulos = await modulo.findAll({
-      include:{
+      include: [
+      {
         model: userModel,
         as:'chofer',
         attributes: ['id','user','nameUser', 'lastNameUser', 'email']
+      },
+      {
+        model: tiempo,
+        as: 'tiempos',
+        attributes: ['id', 'fecha', 'horaLlegada', 'horaSalida'],
       }
+    ]
   });
     return allModulos;
   } catch (error) {

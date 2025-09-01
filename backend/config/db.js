@@ -4,6 +4,7 @@ const createUserModel = require('../models/User'); // Importa la función para c
 const createUserRoleModel = require('../models/UserRoles');
 const createIncidenciaModel = require('../models/Incidencia')
 const createModuloModel = require('../models/Modulo')
+const createTiempo = require('../models/Tiempo')
 const {Sequelize} = require('sequelize'); // Importa el módulo pg para manejar la conexión a la base de datos PostgreSQL.
 
 const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
@@ -17,6 +18,7 @@ const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, pr
    const userRol = createUserRoleModel(sequelize);
    const modulo = createModuloModel(sequelize);
    const incidencia = createIncidenciaModel(sequelize);
+   const tiempo = createTiempo(sequelize);
 
 
     //Relaciones un usuario puede tener solo un rol
@@ -31,7 +33,10 @@ const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, pr
     modulo.hasMany(incidencia,{foreignKey:'modulo_id', as: 'incidencias'});
     //una incidencia puede tene un modulo
     incidencia.belongsTo(modulo,{foreignKey:'modulo_id', as:'modulo'});
-    
+    //un modulo puede tener varios tiempos
+    modulo.hasMany(tiempo,{foreignKey:'id_moduloT', as:'tiempos'});
+    //un tiempo puede tener un modulo
+    tiempo.belongsTo(modulo,{foreignKey:'id_moduloT', as:'modulo'});
 
 async function connection() {
   try {
@@ -62,4 +67,4 @@ async function connection() {
 
 
 
-module.exports = {userModel, userRol, modulo, incidencia, connection}
+module.exports = {userModel, userRol, modulo, incidencia, tiempo, connection}

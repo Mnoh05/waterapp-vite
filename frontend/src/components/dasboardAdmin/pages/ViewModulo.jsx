@@ -6,6 +6,7 @@ import { useAuth } from "../../hooks/authContext.jsx";
 
 const ViewModulo = () => {
   const { modulos } = useAuth();
+  console.log(modulos, "modulos desde viewmodulo");
 
 
   return (

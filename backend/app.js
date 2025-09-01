@@ -9,6 +9,7 @@ app.use(express.json());
 const loginRoutes = require("./routes/loginRoutes.js");
 const modulosRoutes = require("./routes/moduloRoutes.js");
 const incidenciaRoutes = require("./routes/incidenciaRoutes.js");
+const tiempoRoutes = require("./routes/tiempoRoutes.js");
 
 app.use(cors({
   origin: 'http://localhost:5173', // o '*' para permitir todos
@@ -20,7 +21,8 @@ app.use(cors({
 
 app.use("/api/login", loginRoutes);
 app.use("/api/modulos", modulosRoutes);
-app.use("/api/incidencia", incidenciaRoutes)
+app.use("/api/incidencia", incidenciaRoutes);
+app.use("/api/tiempos", tiempoRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hola desde el backend!" });
