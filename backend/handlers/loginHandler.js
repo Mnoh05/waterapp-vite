@@ -1,4 +1,4 @@
-const { userModel, userRol, modulo } = require("../config/db.js");
+const { userModel, userRol, modulo, tiempo } = require("../config/db.js");
 const bcrypt = require("bcrypt");
 
 //funcion para encontrar el usuario
@@ -44,11 +44,21 @@ const allUsersChoferes = async () => {
   try {
     const allUsers = await userModel.findAll({
       where: { rol_id: 4 },
-      include :{
+      include :[
+      {
         model: modulo,
         as:'modulos',
-        attributes:['nameModulo']
-      }
+        attributes:['nameModulo'],
+        include : [ //inclusion anidad trae los valores de los tiempos
+          {
+            model: tiempo,
+            as:'tiempos',
+            required: false,
+          }
+        ]
+      },
+
+    ]
     });
 
     return allUsers;
