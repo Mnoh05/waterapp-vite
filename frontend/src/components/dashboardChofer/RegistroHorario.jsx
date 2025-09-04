@@ -2,6 +2,7 @@ import React, { use } from "react";
 import NavbarChofer from "../navbar/NavbarChofer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import {obtenerHoyLocal} from '../dashboardChofer/utils/utils.js'
 import axios from "axios";
 
 const RegistroHorario = () => {
@@ -28,13 +29,6 @@ const RegistroHorario = () => {
     localStorage.setItem("registro", JSON.stringify(registro));
   }, [registro]);
 
-  function obtenerHoyLocal() {
-    const hoy = new Date();
-    const year = hoy.getFullYear();
-    const month = String(hoy.getMonth() + 1).padStart(2, "0");
-    const day = String(hoy.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  }
 
   const obtenerHora = () => {
     const ahora = new Date();
@@ -58,7 +52,7 @@ const RegistroHorario = () => {
       );
 
       alert("Registro creado");
-      setIsSaved(true); // Marca como guardado
+      setIsSaved(true);
       setRegistro({
         //limpia la informacion
         fecha: obtenerHoyLocal(),
@@ -86,7 +80,7 @@ const RegistroHorario = () => {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [isSaved]);
 
-   // Limpiar localStorage si el usuario abandona el componente
+   // Limpi localStorage si el usuario abandona el componente
   useEffect(() => {
     return () => {
       if (!isSaved) {
@@ -105,7 +99,7 @@ const RegistroHorario = () => {
       localStorage.removeItem("registro"); // eliminr datos no enviados
     }
     console.log("Saliendo del componente");
-    navigate("/home"); // Navegar a la página de inicio
+    navigate("/home"); // Te lleva a la pagina principal
   };
   return (
     <div>

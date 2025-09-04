@@ -17,6 +17,11 @@ const Home = () => {
   });
 
   }
+  const handleRegistrarIncidenciaClick = (modulo) => {
+    navigate(`/registro-incidencia/${modulo.nameModulo}`, {
+     state: { modulo }
+   });
+  }
   console.log(moduloSeleccionado, "modulos del usuario");
   return (
     <div>

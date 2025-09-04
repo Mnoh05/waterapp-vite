@@ -14,6 +14,7 @@ import AddModulo from './components/dasboardAdmin/pages/AddModulo.jsx';
 import HomeChofer from './components/dashboardChofer/pages/home.jsx';
 import IncidenciasChofer from './components/dashboardChofer/pages/Incidencias.jsx';
 import RegistroHorario from './components/dashboardChofer/RegistroHorario.jsx';
+import RegistroIncidencia from './components/dashboardChofer/RegistroIncidencia.jsx';
 
 import './App.css'
 import AddChofer from './components/dasboardAdmin/pages/AddChofer.jsx';
@@ -45,6 +46,7 @@ function App() {
           <Route path='/home' element={< HomeChofer/>}/>
           <Route path='/incidencias' element={< IncidenciasChofer/>}/>
           <Route path='/registro-horario/:moduloName' element={< RegistroHorario />}/> 
+          <Route path='/registro-incidencia/:moduloName' element={< RegistroIncidencia />}/>
         </Route>
 
         
