@@ -2,7 +2,7 @@ import React from "react";
 
 function Modal({ mostrar, onClose, modulo }) {
   if (!mostrar || !modulo) return null;
-
+console.log(modulo, "modulo en modal");
   return (
     <>
       {/* Modal principal */}
@@ -38,8 +38,8 @@ function Modal({ mostrar, onClose, modulo }) {
                     {modulo.tiempos.map((t, i) => (
                       <tr key={i}>
                         <td>{t.fecha}</td>
-                        <td>{t.horaInicio}</td>
-                        <td>{t.horaFin}</td>
+                        <td>{t.horaLlegada}</td>
+                        <td>{t.horaSalida}</td>
                       </tr>
                     ))}
                   </tbody>

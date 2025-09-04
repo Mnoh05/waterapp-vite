@@ -21,21 +21,25 @@ const handleLogin = async (e) => {
       user: username,
       password: password,
     });
+
+    console.log(response,"Respuesta del servidor")
     
     const { token, id, role } = response.data; //extrae info de la 
 
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("id_usuario", response.data.id);
     localStorage.setItem("rol_id", response.data.role);
-    
-    setUser({id: response.data.id, role: response.data.role})
-    
+    localStorage.setItem("nombre", response.data.nombre);
+    localStorage.setItem("apellido", response.data.apellido);
+
+    setUser({id: response.data.id, role: response.data.role, nombre: response.data.nombre, apellido: response.data.apellido})
+
     setMensaje("Bienvenido " + username);
 
     if (id === 1 || id === 5) { 
-      navigate("/admin/dashboard");
+      navigate("/admin/home");
     } else { 
-      navigate("/dashboard");
+      navigate("/home");
     }
   } catch (error) {
     if (error.response) {

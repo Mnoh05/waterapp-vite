@@ -10,6 +10,7 @@ const login = async (req, res) => {
   try {
     // Verifica si el usuario existe
     const usuario = await getUserLogin(user); 
+    console.log(usuario, "Usuario encontrado en el back")
     if (!usuario) {
       return res.status(404).json({ message: "Verifica tu usuario" });
     }
@@ -26,7 +27,7 @@ const login = async (req, res) => {
       { expiresIn: "5m" }
     );
     
-    return res.status(200).json({token, id: usuario.id, role: usuario.rol_id })
+    return res.status(200).json({token, id: usuario.id, role: usuario.rol_id, nombre: usuario.nameUser, apellido: usuario.lastNameUser })
 
   } catch (error) {
     console.error(error); 

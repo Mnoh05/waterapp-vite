@@ -1,6 +1,7 @@
 const {userModel, tiempo, modulo} = require('../config/db');
 
 const createTiempo = async (fecha, horaLlegada, horaSalida, id_moduloT, id_choferT) => {
+    console.log(fecha, horaLlegada, horaSalida, id_moduloT, id_choferT, "desde el back");
     try {
         const newTiempo = await tiempo.create({
             fecha,

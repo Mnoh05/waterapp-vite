@@ -23,9 +23,11 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const userId = localStorage.getItem("id_usuario");
     const role = localStorage.getItem("rol_id");
+    const nombre = localStorage.getItem("nombre");
+    const apellido = localStorage.getItem("apellido");  
 
     if (userId && role) {
-      setUser({ id: userId, role: role });
+      setUser({ id: userId, role: role, nombre: nombre, apellido: apellido});
     }
     listaChoferes();
     listaModulos()

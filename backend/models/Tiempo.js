@@ -3,14 +3,14 @@ const sequelize = require('../config/db');
 
 const createTiempo = (sequelize) => { 
     const Tiempo = sequelize.define('Tiempo',{
-        id: {
+    id: {
         type: DataTypes.INTEGER,// Define el tipo de dato como entero
         autoIncrement: true, // El ID se incrementa automáticamente
         primaryKey: true, // Define el ID como clave primaria
         unique: true
     },
     fecha: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     horaLlegada: {
