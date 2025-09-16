@@ -2,7 +2,7 @@ import React, { use } from "react";
 import NavbarChofer from "../navbar/NavbarChofer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import {obtenerHoyLocal} from '../dashboardChofer/utils/utils.js'
+import { obtenerHoyLocal } from "../dashboardChofer/utils/utils.js";
 import axios from "axios";
 
 const RegistroHorario = () => {
@@ -10,6 +10,7 @@ const RegistroHorario = () => {
   const { modulo } = location.state || {};
   const hoy = new Date().toISOString().split("T")[0];
   const navigate = useNavigate();
+  const [registrado, setRegistrado] = useState(false);
 
   //localStorage para persistencia de datos, y evitar que se borren los datos al recaragr
   const [registro, setRegistro] = useState(() => {
@@ -25,10 +26,45 @@ const RegistroHorario = () => {
         };
   });
 
+  const verificarRegistro = async (fecha, modulo) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/tiempos/filtrado`,
+        {
+          params: { fecha, id_moduloT: modulo.id },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error al verificar registro:", error);
+      return null;
+    }
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultado = await verificarRegistro(obtenerHoyLocal(), {
+        id: modulo.id,
+      });
+      if (!resultado || resultado.length === 0) {
+        return;
+      }
+      if (resultado[0].horaLlegada && !resultado[0].horaSalida) {
+        setRegistro({ ...registro, horaLlegada: resultado[0].horaLlegada });
+      } else if (resultado[0].horaLlegada && resultado[0].horaSalida) {
+        setRegistro({
+          ...registro,
+          horaLlegada: resultado[0].horaLlegada,
+          horaSalida: resultado[0].horaSalida,
+        });
+        setRegistrado(true);
+      }
+    };
+    fetchData();
+  }, []);
+
   useEffect(() => {
     localStorage.setItem("registro", JSON.stringify(registro));
   }, [registro]);
-
 
   const obtenerHora = () => {
     const ahora = new Date();
@@ -37,7 +73,6 @@ const RegistroHorario = () => {
     return `${horas}:${minutos}`;
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const confirmar = window.confirm(
@@ -45,12 +80,17 @@ const RegistroHorario = () => {
     );
     if (!confirmar) return;
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/tiempos/crear-tiempo",
-        registro
-      );
+  if (
+    !registro.fecha ||
+    !registro.horaLlegada ||
+    !registro.horaSalida ||
+    !registro.id_moduloT ||
+    !registro.id_choferT
+  ) {
+    return window.alert("Por favor, completa todos los campos antes de guardar.");
+  }
 
+    try {
       alert("Registro creado");
       setIsSaved(true);
       setRegistro({
@@ -61,26 +101,30 @@ const RegistroHorario = () => {
         id_moduloT: modulo.id,
         id_choferT: modulo.chofer.id,
       });
+       window.location.reload();
     } catch (error) {
-        window.alert("Error al crear el registro, verifica los datos esten completos", error);
+      window.alert(
+        "Error al crear el registro, verifica los datos esten completos",
+        error
+      );
     }
   };
-  console.log(registro, "modulo recibido en registro horario");
+
   const [isSaved, setIsSaved] = useState(false);
 
-    // Advertir al usuario si intenta abandonar la página sin guardar
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (!isSaved) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [isSaved]);
+  // Advertir al usuario si intenta abandonar la página sin guardar
+  // useEffect(() => {
+  //   const handleBeforeUnload = (e) => {
+  //     if (!isSaved) {
+  //       e.preventDefault();
+  //       e.returnValue = "";
+  //     }
+  //   };
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+  //   return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  // }, [isSaved]);
 
-   // Limpi localStorage si el usuario abandona el componente
+  // Limpi localStorage si el usuario abandona el componente
   useEffect(() => {
     return () => {
       if (!isSaved) {
@@ -89,16 +133,16 @@ const RegistroHorario = () => {
     };
   }, [isSaved]);
 
-    // Función para manejar la salida del componente
+  // Función para manejar la salida del componente
   const salir = () => {
     if (!isSaved) {
       const confirmar = window.confirm(
-        "No has enviado los datos. ¿Seguro que quieres salir? Se eliminarán los datos."
+        "¿Seguro que quieres salir?"
       );
       if (!confirmar) return;
       localStorage.removeItem("registro"); // eliminr datos no enviados
     }
-    console.log("Saliendo del componente");
+
     navigate("/home"); // Te lleva a la pagina principal
   };
   return (
@@ -107,50 +151,112 @@ const RegistroHorario = () => {
       Registro de horario del módulo <h3>{modulo.nameModulo}</h3>
       <div className="container">
         <form onSubmit={handleSubmit}>
-            <div className="row mb-3">
-                <div>
-                <label>Fecha:</label>
-                <input type="date" value={registro.fecha || hoy} readOnly />
-                </div>
+          <div className="row mb-3">
+            <div>
+              <label>Fecha:</label>
+              <input type="date" value={registro.fecha || hoy} readOnly />
             </div>
-            <div className="row mb-3 d-flex align-items-center gap-2">
+          </div>
+          <div className="row mb-3 d-flex align-items-center gap-2">
             <label className="col-3">Hora de Llegada:</label>
-            <input type="time" className="col-3" value={registro.horaLlegada} readOnly />
+            <input
+              type="time"
+              className="col-3"
+              value={registro.horaLlegada}
+              readOnly
+            />
             {!registro.horaLlegada && (
-                <button
+              <button
                 type="button"
                 className="btn btn-primary btn-sm col-3"
                 data-bs-toggle="button"
-                onClick={() => {
-                    setRegistro({ ...registro, horaLlegada: obtenerHora() });
+                onClick={async () => {
+                  try {
+                    const horaLlegada = obtenerHora();
+                    const registroParaEnviar = {
+                      ...registro,
+                      horaLlegada: horaLlegada,
+                    };
+                    setRegistro(registroParaEnviar);
+                    const response = await axios.post(
+                      "http://localhost:3000/api/tiempos/crear-tiempo",
+                      registroParaEnviar
+                    );
+
+                  } catch (error) {
+                    console.error(
+                      "Error al crear registro:",
+                      error.response?.data || error.message
+                    );
+                  }
                 }}
-                >
+              >
                 Registrar hora de llegada
-                </button>
+              </button>
             )}
-            </div>
-            <div className="row mb-3 d-flex align-items-center gap-2">
+          </div>
+          <div className="row mb-3 d-flex align-items-center gap-2">
             <label className="col-3">Hora de Salida:</label>
-            <input type="time" className="col-3" value={registro.horaSalida} readOnly />
-            { registro.horaLlegada && !registro.horaSalida && (
-                <button
+            <input
+              type="time"
+              className="col-3"
+              value={registro.horaSalida}
+              readOnly
+            />
+            {registro.horaLlegada && !registro.horaSalida && (
+              <button
                 type="button"
                 className="btn btn-primary btn-sm col-3"
                 data-bs-toggle="button"
-                onClick={() => {
-                    setRegistro({ ...registro, horaSalida: obtenerHora() });
+                onClick={async () => {
+                  try {
+                    const horaSSalida = obtenerHora();
+                    const registroParaEnviar = {
+                      ...registro,
+                      horaSalida: horaSSalida,
+                    };
+                    setRegistro(registroParaEnviar);
+                    const response = await axios.patch(
+                      `http://localhost:3000/api/tiempos/actualizar-tiempo/${registro.id_moduloT}?fecha=${registro.fecha}`,
+                      { horaSalida: horaSSalida }
+                    );
+                  } catch (error) {
+                    console.error(
+                      "Error al crear registro:",
+                      error.response?.data || error.message
+                    );
+                  }
                 }}
-                >
+              >
                 Registrar hora de salida
-                </button>
+              </button>
             )}
-            </div>
-            <div className="row mb-3 d-flex align-items-center gap-2">
-                <div className="col-3"></div>
-                <button type="submit" className="btn btn-success col-3">Registrar</button>
-                <button type="button" className="btn btn-danger col-3" onClick={salir}> Salir</button>
-                <div className="col-3"></div>
-            </div>
+          </div>
+          <div className="row mb-3 d-flex align-items-center gap-2">
+            <div className="col-3"></div>
+            {!registrado ? (
+              <button type="submit" className="btn btn-success col-3">
+                Registrar
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-secondary col-3"
+                disabled
+              >
+                Registrado
+              </button>
+            )}
+            <button
+              type="button"
+              className="btn btn-danger col-3"
+              onClick={salir}
+            >
+              {" "}
+              Salir
+            </button>
+            <div className="col-3"></div>
+          </div>
         </form>
       </div>
     </div>

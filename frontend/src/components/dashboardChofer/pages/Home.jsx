@@ -22,7 +22,7 @@ const Home = () => {
      state: { modulo }
    });
   }
-  console.log(moduloSeleccionado, "modulos del usuario");
+ 
   return (
     <div>
         <NavbarChofer />
