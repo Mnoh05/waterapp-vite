@@ -32,7 +32,7 @@ const createTiempo = (sequelize) => {
     }, {
         indexes: [
             {
-                unique: true,
+                unique: false,
                 fields: ['fecha', 'id_moduloT'] // 👈 combinación única
             }
         ]

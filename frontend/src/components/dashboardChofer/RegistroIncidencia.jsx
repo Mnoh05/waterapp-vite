@@ -10,6 +10,7 @@ const RegistroIncidencia = () => {
   const { modulo } = location.state || {};
   const [formulario, setFormulario] = useState(() => {
     const datosGuardados = localStorage.getItem("registro");
+    console.log(modulo, "modulo en registro de incidencia");
     return datosGuardados
       ? JSON.parse(datosGuardados)
       : {
@@ -19,27 +20,64 @@ const RegistroIncidencia = () => {
   });
   console.log(formulario, "desde registro de incidencia");
 
+  const handleSubmit = async (e) => {
+    //accion que envia la informacion a mi api para crear el modulo
+    e.preventDefault();
+    const confirmar = window.confirm(
+      "¿Estás seguro de que deseas crear esta incidencia?"
+    );
+    if (!confirmar) return;
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/incidencia/nuevo",
+        formulario
+      );
+
+      console.log(response.data, "respuesta de crear incidencia");
+
+      alert("Incidencia creada");
+      setFormulario({
+        //limpia la informacion
+        description: "",
+        modulo_id: modulo.id,
+      });
+    } catch (error) {
+      console.error("Error al crear la incidencia:", error);
+    }
+  };
+
   return (
     <div>
       <NavbarChofer />
-      Registro de Incidencia del módulo <h3> {modulo.nameModulo}</h3>
-      <div className="container">
-        <form>
-          <div className="row mb-3">
-            <div>
-              <label>Descripcion de la incidencia</label>
+      <div className="container mt-4">
+        <div className="card shadow-sm p-4">
+          <h4 className="mb-4">Registrar incidencia del módulo<h3> {modulo.nameModulo}</h3></h4>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label fw-bold">
+                Descripción de la incidencia
+              </label>
               <textarea
+                id="description"
+                className="form-control"
                 value={formulario.description}
                 onChange={(e) =>
                   setFormulario({ ...formulario, description: e.target.value })
                 }
-                rows="4"
-                cols="50"
-                placeholder="Escribe aquí la descripcion de la incidencia..."
+                rows="5"
+                placeholder="Describe la incidencia detalladamente..."
+                required
               />
             </div>
-          </div>
-        </form>
+
+            <div className="d-flex justify-content-center">
+              <button type="submit" className="btn btn-primary">
+                Crear
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

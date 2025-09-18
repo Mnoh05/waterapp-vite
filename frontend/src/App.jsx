@@ -15,6 +15,7 @@ import HomeChofer from './components/dashboardChofer/pages/home.jsx';
 import IncidenciasChofer from './components/dashboardChofer/pages/Incidencias.jsx';
 import RegistroHorario from './components/dashboardChofer/RegistroHorario.jsx';
 import RegistroIncidencia from './components/dashboardChofer/RegistroIncidencia.jsx';
+import contraseñaFile from './components/utils/contraseñaFile.jsx';
 
 import './App.css'
 import AddChofer from './components/dasboardAdmin/pages/AddChofer.jsx';
@@ -49,7 +50,8 @@ function App() {
           <Route path='/registro-incidencia/:moduloName' element={< RegistroIncidencia />}/>
         </Route>
 
-        
+        <Route path='/cambiar-contraseña' element={<contraseñaFile />} />
+
       </Routes>
     </BrowserRouter>
     </AuthProvider>
