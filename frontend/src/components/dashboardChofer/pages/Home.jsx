@@ -22,6 +22,12 @@ const Home = () => {
      state: { modulo }
    });
   }
+
+  const handleSolicitudMaterialesClick = (modulo) => {
+    navigate(`/solicitud-materiales/${modulo.nameModulo}`, {
+      state: { modulo }
+    });
+  }
  
   return (
     <div>
@@ -29,6 +35,7 @@ const Home = () => {
         <h1>Bienvenido{" "}{user.nombre}</h1>
               <h2>Módulos Asignados</h2>
       <div className="container pt 4">
+        <div className="table-responsive">
         <table className="table table-striped table-bordered">
           <thead>
             <tr>
@@ -36,23 +43,28 @@ const Home = () => {
               <th>Módulo</th>
               <th>Botón de Registro</th>
               <th>Registro de Incidencias</th>
+              <th>Solicitud de Materiales</th>
             </tr>
           </thead>
           <tbody>
             {modulosDelUsuario.map((item, index) => (
               <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>{item.nameModulo}</td>
+                <td><h4>{item.nameModulo}</h4></td>
                 <td>
                   <button className="btn btn-primary" onClick={() => handleIniciarClick(item)}>Iniciar</button>
                 </td>
                 <td>
                   <button className="btn btn-warning" onClick={() => handleRegistrarIncidenciaClick(item)}>Registrar Incidencia</button>
                 </td>
+                <td>
+                  <button className="btn btn-info" onClick={() => handleSolicitudMaterialesClick(item)}>Solicitar</button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )

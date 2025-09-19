@@ -37,7 +37,7 @@ console.log(modulo, "modulo en modal");
                   <tbody>
                     {modulo.tiempos.map((t, i) => (
                       <tr key={i}>
-                        <td>{t.fecha}</td>
+                        <td>{t.fecha.slice(0, 10)}</td>
                         <td>{t.horaLlegada}</td>
                         <td>{t.horaSalida}</td>
                       </tr>
