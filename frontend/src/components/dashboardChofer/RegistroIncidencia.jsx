@@ -28,14 +28,16 @@ const RegistroIncidencia = () => {
     );
     if (!confirmar) return;
 
+    if (!formulario.description.trim()) {
+      alert("La descripción no puede estar vacía.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:3000/api/incidencia/nuevo",
         formulario
       );
-
-      console.log(response.data, "respuesta de crear incidencia");
-
       alert("Incidencia creada");
       setFormulario({
         //limpia la informacion
