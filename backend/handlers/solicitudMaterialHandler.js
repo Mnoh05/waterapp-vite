@@ -1,16 +1,29 @@
-const { SolicitudMaterial, SolicitudMaterialDetalles} = require('../config/db.js');
+const {
+  SolicitudMaterial,
+  SolicitudMaterialDetalles,
+  modulo,
+} = require("../config/db.js");
 
-const createSolicitudMaterial = async (fecha, descripcion, solicitudId, detalles, moduloId) => {
+const createSolicitudMaterial = async (
+  fecha,
+  descripcion,
+  solicitudId,
+  detalles,
+  moduloId
+) => {
   try {
-    const newSolicitud = await SolicitudMaterial.create({
-      fecha,
-      descripcion,
-      solicitudId,
-      moduloId,
-      detalles 
-    }, {
-      include: [{ model: SolicitudMaterialDetalles, as: "detalles" }] 
-    });
+    const newSolicitud = await SolicitudMaterial.create(
+      {
+        fecha,
+        descripcion,
+        solicitudId,
+        moduloId,
+        detalles,
+      },
+      {
+        include: [{ model: SolicitudMaterialDetalles, as: "detalles" }],
+      }
+    );
 
     return newSolicitud;
   } catch (error) {
@@ -19,23 +32,56 @@ const createSolicitudMaterial = async (fecha, descripcion, solicitudId, detalles
   }
 };
 
-
 const allSolicitudes = async () => {
   try {
     console.log("Entrando a allSolicitudes en el handler");
 
     const solicitudes = await SolicitudMaterial.findAll({
-      include: [{ model: SolicitudMaterialDetalles, as: "detalles" }]
+      include: [
+        {
+          model: SolicitudMaterialDetalles,
+          as: "detalles",
+        },
+        {
+          model: modulo,
+          as: "moduloSM",
+        },
+      ],
     });
 
     return solicitudes;
   } catch (error) {
     console.error(error);
-    throw new Error('Error al obtener las solicitudes de material');
+    throw new Error("Error al obtener las solicitudes de material");
+  }
+};
+
+const allSolicitudesByModulo = async () => {
+  try {
+    const solicitudes = await modulo.findAll({
+      include: [
+        {
+          model: SolicitudMaterial,
+          as: "solicitudes",
+          include: [
+            {
+              model: SolicitudMaterialDetalles,
+              as: "detalles",
+            }
+          ]
+        }
+      ]
+    });
+
+    return solicitudes;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error al obtener las solicitudes de material");
   }
 };
 
 module.exports = {
   createSolicitudMaterial,
-  allSolicitudes
+  allSolicitudes,
+  allSolicitudesByModulo,
 };

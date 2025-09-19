@@ -3,19 +3,16 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
 import { useState } from "react";
 
-const Navbar = ({onSearch}) => {
+const Navbar = ({ onSearch }) => {
   const { setUser } = useAuth();
   const navigate = useNavigate();
-  const [input, setInput] = useState('');
-
-  
+  const [input, setInput] = useState("");
 
   const handleSubmit = (e) => {
-    console.log(e,input, "Hola desde la nav")
-  e.preventDefault();
-  onSearch(input); // Llama a la función del padre
-};
-
+    console.log(e, input, "Hola desde la nav");
+    e.preventDefault();
+    onSearch(input); // Llama a la función del padre
+  };
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
@@ -37,7 +34,6 @@ const Navbar = ({onSearch}) => {
     <div className="mb-2">
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-
           <button
             className="navbar-toggler"
             type="button"
@@ -55,7 +51,7 @@ const Navbar = ({onSearch}) => {
               <li>
                 <button
                   className="btn btn-outline-secondary"
-                  style={{ border: 'none' }}
+                  style={{ border: "none" }}
                   onClick={handleBack}
                 >
                   ← Regresar
@@ -82,22 +78,22 @@ const Navbar = ({onSearch}) => {
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                <Link
-                  className="dropdown-item"
-                  aria-current="page"
-                  to="/admin/choferes"
-                >
-                  Ver choferes
-                </Link>
+                    <Link
+                      className="dropdown-item"
+                      aria-current="page"
+                      to="/admin/choferes"
+                    >
+                      Ver choferes
+                    </Link>
                   </li>
                   <li>
-                <Link
-                  className="dropdown-item"
-                  aria-current="page"
-                  to="/admin/agregar-chofer"
-                >
-                  Agregar Chofer
-                </Link>
+                    <Link
+                      className="dropdown-item"
+                      aria-current="page"
+                      to="/admin/agregar-chofer"
+                    >
+                      Agregar Chofer
+                    </Link>
                   </li>
                 </ul>
               </li>
@@ -113,31 +109,31 @@ const Navbar = ({onSearch}) => {
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                <Link
-                  className="dropdown-item"
-                  aria-current="page"
-                  to="/admin/modulos"
-                >
-                  Ver módulos
-                </Link>
+                    <Link
+                      className="dropdown-item"
+                      aria-current="page"
+                      to="/admin/modulos"
+                    >
+                      Ver módulos
+                    </Link>
                   </li>
                   <li>
-                <Link
-                  className="dropdown-item"
-                  aria-current="page"
-                  to="/admin/agregar-modulo"
-                >
-                  Agregar Módulo
-                </Link>
+                    <Link
+                      className="dropdown-item"
+                      aria-current="page"
+                      to="/admin/agregar-modulo"
+                    >
+                      Agregar Módulo
+                    </Link>
                   </li>
                   <li>
-                <Link
-                  className="dropdown-item"
-                  aria-current="page"
-                  to="/admin/editar-modulo"
-                >
-                  Editar Módulo
-                </Link>
+                    <Link
+                      className="dropdown-item"
+                      aria-current="page"
+                      to="/admin/editar-modulo"
+                    >
+                      Editar Módulo
+                    </Link>
                   </li>
                 </ul>
               </li>
@@ -150,6 +146,15 @@ const Navbar = ({onSearch}) => {
                   Incidencias
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/admin/solicitud-materiales"
+                >
+                  Solicitud de Materiales
+                </Link>
+              </li>
             </ul>
 
             <form onSubmit={handleSubmit} className="d-flex" role="search">
@@ -157,7 +162,7 @@ const Navbar = ({onSearch}) => {
                 className="form-control me-2"
                 type="text"
                 value={input}
-                onChange={(e)=> setInput(e.target.value)}
+                onChange={(e) => setInput(e.target.value)}
                 placeholder="Buscar"
                 aria-label="Search"
               />
@@ -166,7 +171,13 @@ const Navbar = ({onSearch}) => {
               </button>
             </form>
             <div>
-              <button onClick={handleLogOut} className="btn btn-outline-secondary" style={{ border: 'none' }}>Cerrar Sesión</button>
+              <button
+                onClick={handleLogOut}
+                className="btn btn-outline-secondary"
+                style={{ border: "none" }}
+              >
+                Cerrar Sesión
+              </button>
             </div>
           </div>
         </div>

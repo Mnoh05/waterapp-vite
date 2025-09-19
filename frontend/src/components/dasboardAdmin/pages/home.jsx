@@ -6,8 +6,6 @@ import Modal from "./Modal.jsx";
 
 const Home = () => {
   const { modulos, choferes } = useAuth();
-  console.log(modulos, "modulos desde viewmodulo");
-  console.log(choferes, "choferes desde viewmodulo");
 
   const [moduloSeleccionado, setModuloSeleccionado] = useState(null);
   const [mostrarModal, setMostrarModal] = useState(false);

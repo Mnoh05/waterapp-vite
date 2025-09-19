@@ -16,6 +16,7 @@ import IncidenciasChofer from './components/dashboardChofer/pages/Incidencias.js
 import RegistroHorario from './components/dashboardChofer/RegistroHorario.jsx';
 import RegistroIncidencia from './components/dashboardChofer/RegistroIncidencia.jsx';
 import contraseñaFile from './components/utils/contraseñaFile.jsx';
+import SolicitudMateriales from './components/dasboardAdmin/pages/SolicitudMateriales.jsx';
 
 import './App.css'
 import AddChofer from './components/dasboardAdmin/pages/AddChofer.jsx';
@@ -40,6 +41,7 @@ function App() {
           <Route path='/admin/agregar-modulo' element={<AddModulo />}/>
           <Route path='/admin/agregar-chofer' element={<AddChofer /> } />
           <Route path='/admin/choferes' element={<ViewChoferes />}/>
+          <Route path='/admin/solicitud-materiales' element={<SolicitudMateriales />}/>
 
         </Route>
 
