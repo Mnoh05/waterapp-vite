@@ -52,15 +52,16 @@ const listByModulo = async(req, res) =>{
 }
 
 const listByChofer = async(req, res) => {
-    const {id} = req.body;
+    const choferId = parseInt(req.params.id);
 
+    console.log(choferId, "id del chofer en incidencia controller");
     try {
-        const chofer = await userModel.findByPk(id);
-            
+        const chofer = await userModel.findByPk(choferId);
+
         if(!chofer){
             return res.status(404).json({ error: "Chofer no encontrado en la base de datos" });
         }
-        const incidentC = await incidentsByChofer(id);
+        const incidentC = await incidentsByChofer(choferId);
         return res.status(200).json(incidentC);
 
     } catch (error) {

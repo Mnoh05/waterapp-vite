@@ -5,6 +5,6 @@ const{listAllIncidents, createNewIncident, listByModulo, listByChofer} = require
 router.get('/', listAllIncidents);
 router.post('/nuevo', createNewIncident);
 router.post('/modulo',listByModulo);
-router.post('/chofer',listByChofer);
+router.get('/chofer/:id',listByChofer);
 
 module.exports = router;
