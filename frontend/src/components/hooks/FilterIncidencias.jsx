@@ -1,25 +1,25 @@
 import React from 'react'
 import dayjs from 'dayjs';
+import "../css/home.css"
 const FilterIncidencias = ({searchItem, incidencias}) => {
      
     
     const normaliza = (texto) => (texto ?? '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     
-        const filtro = incidencias.filter((item) => 
-        
-            item.modulo.nameModulo === searchItem
-            
+        const filtro = incidencias.filter((item) =>       
+            item.modulo.nameModulo === searchItem           
         );
 
    
     const hayIncidencias = Array.isArray(filtro) && filtro.length > 0; //para evitar el valor null del array
   return (
     <div>
-      <div className="container pt 4">
+            <div className="contenedor">
+        <div className="text-start"><h2 className="text">Incidencias</h2></div>
         
         {
          hayIncidencias ? (
-                <table className="table table-striped table-bordered">
+                <table className="table table-custom">
                     <thead>
                         <tr>
                           
@@ -46,7 +46,7 @@ const FilterIncidencias = ({searchItem, incidencias}) => {
                     </tbody>
                 </table>
             ) : (
-                <table className="table table-striped table-bordered">
+                <table className="table table-custom">
                     <thead>
                         <tr>
                           

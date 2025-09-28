@@ -3,6 +3,8 @@ import NavbarChofer from '../../navbar/NavbarChofer'
 import { useAuth } from '../../hooks/authContext'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import "../../css/home.css"
+import "../../navbar/navbar.css"
 
 const Home = () => {
   const { user, modulos } = useAuth();
@@ -31,12 +33,15 @@ const Home = () => {
  
   return (
     <div>
-        <NavbarChofer />
-        <h1>Bienvenido{" "}{user.nombre}</h1>
-              <h2>Módulos Asignados</h2>
-      <div className="container pt 4">
+        <NavbarChofer />     
+              
+        <div className='row'  style={{ color: "var(--color-text)" }}>
+          <div className='col-md-12'><h4>Bienvenido: {user.nombre.charAt(0).toUpperCase() + user.nombre.slice(1)}</h4></div>
+          <div className='col-md-12'><h5>Módulos Asignados</h5></div>
+        </div>
+      <div className="contenedor pt 4">
         <div className="table-responsive">
-        <table className="table table-striped table-bordered">
+        <table className="table table-custom">
           <thead>
             <tr>
               <th>No.</th>

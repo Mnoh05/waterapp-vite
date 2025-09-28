@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
 import { useState } from "react";
+import "./navbar.css";
 
 const NavbarChofer = ({onSearch}) => {
   const { setUser } = useAuth();
@@ -35,7 +36,7 @@ const NavbarChofer = ({onSearch}) => {
   };
   return (
     <div className="mb-2">
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg text-nav">
         <div className="container-fluid">
 
           <button
@@ -52,26 +53,27 @@ const NavbarChofer = ({onSearch}) => {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li>
+              {/* <li>
                 <button
                   className="btn btn-outline-secondary"
-                  style={{ border: 'none' }}
-                  onClick={handleBack}
+                  style={{ border: 'none', color:"white" }}
+                 
                 >
                   ← Regresar
                 </button>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link
                   className="nav-link active"
                   aria-current="page"
                   to="/home"
+                  style={{ color: "var(--color-text)" }}
                 >
                   Home
                 </Link>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   className="nav-link active"
                   aria-current="page"
@@ -79,22 +81,8 @@ const NavbarChofer = ({onSearch}) => {
                 >
                   Registro de Incidencias
                 </Link>
-              </li>
+              </li> */}
             </ul>
-
-            <form onSubmit={handleSubmit} className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="text"
-                value={input}
-                onChange={(e)=> setInput(e.target.value)}
-                placeholder="Buscar"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Buscar
-              </button>
-            </form>
             <div>
               <button onClick={handleLogOut} className="btn btn-outline-secondary" style={{ border: 'none' }}>Cerrar Sesión</button>
             </div>

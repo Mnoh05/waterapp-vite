@@ -38,11 +38,11 @@ const ModalSolicitudes = ({ mostrar, onClose, modulo }) => {
               </p>
 
               {modulo.solicitudes?.length > 0 ? (
-                <table className="table table-bordered table-striped">
+                <table className="table table-custom">
                   <thead>
                     <tr>
                       <th>Fecha</th>
-                      <th>Ver</th>
+                      <th>Ver Solicitud</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -2,17 +2,11 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
 import { useState } from "react";
+import "./navbar.css";
 
 const Navbar = ({ onSearch }) => {
   const { setUser } = useAuth();
   const navigate = useNavigate();
-  const [input, setInput] = useState("");
-
-  const handleSubmit = (e) => {
-    console.log(e, input, "Hola desde la nav");
-    e.preventDefault();
-    onSearch(input); // Llama a la función del padre
-  };
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
@@ -31,8 +25,8 @@ const Navbar = ({ onSearch }) => {
     }
   };
   return (
-    <div className="mb-2">
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <div className="mb-2 ">
+      <nav className="navbar navbar-expand-lg  text-nav">
         <div className="container-fluid">
           <button
             className="navbar-toggler"
@@ -49,16 +43,11 @@ const Navbar = ({ onSearch }) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li>
-                <button
-                  className="btn btn-outline-secondary"
-                  style={{ border: "none" }}
-                  onClick={handleBack}
-                >
-                  ← Regresar
-                </button>
+
               </li>
               <li className="nav-item">
                 <Link
+                style={{ color: "var(--color-text)" }}
                   className="nav-link active"
                   aria-current="page"
                   to="/admin/home"
@@ -67,81 +56,31 @@ const Navbar = ({ onSearch }) => {
                 </Link>
               </li>
               <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                <Link
+                  style={{ color: "var(--color-text)" }}
+                  className="nav-link "
+                  aria-current="page"
+                  to="/admin/choferes"
                 >
                   Choferes
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      aria-current="page"
-                      to="/admin/choferes"
-                    >
-                      Ver choferes
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      aria-current="page"
-                      to="/admin/agregar-chofer"
-                    >
-                      Agregar Chofer
-                    </Link>
-                  </li>
-                </ul>
+                </Link>
               </li>
               <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+               <Link
+                  style={{ color: "var(--color-text)" }}
+                  className="nav-link "
+                  aria-current="page"
+                  to="/admin/modulos"
                 >
                   Módulos
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      aria-current="page"
-                      to="/admin/modulos"
-                    >
-                      Ver módulos
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      aria-current="page"
-                      to="/admin/agregar-modulo"
-                    >
-                      Agregar Módulo
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      aria-current="page"
-                      to="/admin/editar-modulo"
-                    >
-                      Editar Módulo
-                    </Link>
-                  </li>
-                </ul>
+                </Link>
               </li>
               <li className="nav-item">
                 <Link
                   className="nav-link active"
                   aria-current="page"
                   to="/admin/incidencias"
+                  style={{ color: "var(--color-text)" }}
                 >
                   Incidencias
                 </Link>
@@ -151,30 +90,18 @@ const Navbar = ({ onSearch }) => {
                   className="nav-link active"
                   aria-current="page"
                   to="/admin/solicitud-materiales"
+                  style={{ color: "var(--color-text)" }}
                 >
                   Solicitud de Materiales
                 </Link>
               </li>
             </ul>
-
-            <form onSubmit={handleSubmit} className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Buscar"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Buscar
-              </button>
-            </form>
             <div>
               <button
                 onClick={handleLogOut}
                 className="btn btn-outline-secondary"
-                style={{ border: "none" }}
+                style={{ border: "none", color: "var(--color-text)" }}
+
               >
                 Cerrar Sesión
               </button>

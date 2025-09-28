@@ -26,7 +26,7 @@ const ModalFechasSolicitudes = ({ mostrar, onClose, fecha, nombreModulo }) => {
             {/* Cuerpo */}
             <div className="modal-body">
               {fecha.detalles?.length > 0 ? (
-                <table className="table table-bordered table-striped">
+                <table className="table table-custom">
                   <thead>
                     <tr>
                       <th>Cantidad</th>

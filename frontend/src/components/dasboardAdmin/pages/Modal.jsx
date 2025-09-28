@@ -1,8 +1,24 @@
 import React from "react";
 
 function Modal({ mostrar, onClose, modulo }) {
+
+function calcularDuracion(horaLlegada, horaSalida) {
+  // Convertimos a objetos Date usando una fecha ficticia
+  const inicio = new Date(`1970-01-01T${horaLlegada}`);
+  const fin = new Date(`1970-01-01T${horaSalida}`);
+
+  const diffMs = fin - inicio;
+
+  if (isNaN(diffMs) || diffMs < 0) return "0h 0m"; // evita errores
+
+  const horas = Math.floor(diffMs / (1000 * 60 * 60));
+  const minutos = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+
+  return `${horas}h ${minutos}m`;
+}
+
+
   if (!mostrar || !modulo) return null;
-console.log(modulo, "modulo en modal");
   return (
     <>
       {/* Modal principal */}
@@ -18,20 +34,19 @@ console.log(modulo, "modulo en modal");
                 onClick={onClose}
               ></button>
             </div>
-
-            {/* Cuerpo */}
             <div className="modal-body">
               <p>
                 <strong>Nombre del módulo:</strong> {modulo.nameModulo}
               </p>
 
               {modulo.tiempos?.length > 0 ? (
-                <table className="table table-bordered table-striped">
+                <table className="table table-custom">
                   <thead>
                     <tr>
                       <th>Fecha</th>
                       <th>Inicio</th>
                       <th>Fin</th>
+                      <th>Tiempo invertido</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -40,6 +55,7 @@ console.log(modulo, "modulo en modal");
                         <td>{t.fecha.slice(0, 10)}</td>
                         <td>{t.horaLlegada}</td>
                         <td>{t.horaSalida}</td>
+                        <td>{calcularDuracion(t.horaLlegada, t.horaSalida)}</td>
                       </tr>
                     ))}
                   </tbody>

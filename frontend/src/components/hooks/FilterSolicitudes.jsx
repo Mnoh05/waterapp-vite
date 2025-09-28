@@ -1,6 +1,7 @@
 import React from "react";
 import dayjs from "dayjs";
 import { useState } from "react";
+import "../css/home.css";
 import ModalSolicitudes from "../dasboardAdmin/pages/ModalSolicitudes";
 const FilterSolicitudes = ({ searchItem, solicitudes }) => {
   console.log(solicitudes, "materiales desde filterSolicitudes ");
@@ -24,9 +25,10 @@ const FilterSolicitudes = ({ searchItem, solicitudes }) => {
   const haySolicitudes = Array.isArray(filtro) && filtro.length > 0; //para evitar el valor null del array
   return (
     <div>
-      <div className="container pt 4">
+      <div className="contenedor">
+        <div className="text-start"><h2 className="text">Registro de solicitudes de materiales</h2></div>
         {haySolicitudes ? (
-          <table className="table table-striped table-bordered">
+          <table className="table table-custom">
             <thead>
               <tr>
                 <th>No.</th>
@@ -52,7 +54,7 @@ const FilterSolicitudes = ({ searchItem, solicitudes }) => {
             </tbody>
           </table>
         ) : (
-          <table className="table table-striped table-bordered">
+          <table className="table table-custom">
             <thead>
               <tr>
                 <th>No.</th>
@@ -69,6 +71,7 @@ const FilterSolicitudes = ({ searchItem, solicitudes }) => {
                       type="button"
                       className="btn btn-outline-primary mt-2"
                       onClick={() => abrirModal(item)}
+                      style={{border:"none", color:"black"}}
                     >
                       {item.nameModulo}
                     </button>

@@ -58,7 +58,7 @@ const Login = () => {
   };
 
   return (
-    <div className="body-login">
+    <div className="body-login" style={{padding: "1.5rem"}}>
       <div className="container d-flex justify-content-center align-items-center">
         <div className="card mb-3 custom-card" style={{ padding: "1em" }}>
           <div className="row g-0 custom-card-login">
@@ -76,7 +76,7 @@ const Login = () => {
                 <h5 className="card-title" style={{ color: "#0047AB" }}>
                   WaterApp
                 </h5>
-                <form onSubmit={handleLogin} className="login-form">
+                <form onSubmit={handleLogin} className="login-form" style={{padding:"2rem"}}>
                   <div className="mb-3">
                     <label>Usuario</label>
                     <input

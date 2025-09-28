@@ -3,6 +3,7 @@ import Navbar from "../../navbar/Navbar";
 import { useAuth } from "../../hooks/authContext.jsx";
 import { useState } from "react";
 import Modal from "./Modal.jsx";
+import "../../css/home.css";
 
 const Home = () => {
   const { modulos, choferes } = useAuth();
@@ -16,12 +17,13 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div style={{width: "100%"}}>
       <Navbar />
-      <h2>Tiempos de cada modulo</h2>
-      <div className="container accordion" id="accordionExample">
+      
+      <div className="accordion contenedor" id="accordionExample">
+        <div className="text-start"><h2 className="text">Tiempos de los módulos</h2></div>
         {choferes.map((chofer, index) => (
-          <div className="accordion-item" key={index}>
+          <div className="accordion-item" key={index} style={{color: "var(--color-text)"}}>
             <h2 className="accordion-header" id={`heading${index}`}>
               <button
                 className="accordion-button collapsed"
@@ -30,6 +32,7 @@ const Home = () => {
                 data-bs-target={`#collapse${index}`}
                 aria-expanded="true"
                 aria-controls={`collapseOne${index}`}
+                style={{color: "var(--color-text)"}}
               >
                 Chofer: {chofer.nameUser} {chofer.lastNameUser}
               </button>

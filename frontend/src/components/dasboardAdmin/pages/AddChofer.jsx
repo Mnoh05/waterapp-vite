@@ -2,10 +2,12 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "../../navbar/Navbar.jsx";
-import { useAuth } from '../../hooks/authContext.jsx';
+import { useAuth } from "../../hooks/authContext.jsx";
+import { Link } from "react-router-dom";
+import "../../css/home.css";
 
 const AddChofer = () => {
-  const {listaChoferes} = useAuth();
+  const { listaChoferes } = useAuth();
   const [formulario, setFormulario] = useState({
     user: "",
     nameUser: "",
@@ -26,6 +28,12 @@ const AddChofer = () => {
   const handleSubmit = async (e) => {
     //accion que envia la informacion a mi api para crear el modulo
     e.preventDefault();
+    const { user, nameUser, lastNameUser, email } = formulario;
+    if (!user || !nameUser || !lastNameUser || !email) {
+      alert("Por favor completa todos los campos obligatorios.");
+      return;
+    }
+
     const confirmar = window.confirm(
       "¿Estás seguro de que deseas crear este usuario?"
     );
@@ -47,77 +55,106 @@ const AddChofer = () => {
         rol_id: "4",
         password: "admin",
       });
-      listaChoferes()
+      listaChoferes();
     } catch (error) {
       console.error("Error al crear el usuario:", error);
+    }
+  };
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      navigate("/admin/dashboard");
     }
   };
 
   return (
     <div>
       <Navbar />
-      <div className="container pt 4">
-        <h2>Agregar Chofer</h2>
+      <div className="contenedor pt 4">
+        <div className="row p-2">
+          <div className="col-md-4"></div>
+          <div className="col-md-4">
+            <div className="text-center">
+              <h2 className="text">Agregar Chofer</h2>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <button
+              className="btn-chico-azul"
+              style={{ border: "none", color: "white" }}
+              onClick={handleBack}
+            >
+              ← Regresar
+            </button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-4"></div>
+          <div className="col-md-4">
+            <form onSubmit={handleSubmit} className="card-translucida">
+              <div className="mb-3 text-start">
+                <label htmlFor="nameUser" className="form-label">
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="nameUser"
+                  id="nameUser"
+                  value={formulario.nameUser}
+                  onChange={handleChangeFormulario}
+                />
+              </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="nameUser" className="form-label">
-              Nombre
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="nameUser"
-              id="nameUser"
-              value={formulario.nameUser}
-              onChange={handleChangeFormulario}
-            />
-          </div>
+              <div className="mb-3 text-start">
+                <label htmlFor="lastNameUser" className="form-label">
+                  Apellido
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="lastNameUser"
+                  id="lastNameUser"
+                  value={formulario.lastNameUser}
+                  onChange={handleChangeFormulario}
+                />
+              </div>
+              <div className="mb-3 text-start">
+                <label htmlFor="user" className="form-label">
+                  Usuario
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="user"
+                  id="user"
+                  value={formulario.user}
+                  onChange={handleChangeFormulario}
+                />
+              </div>
+              <div className="mb-3 text-start">
+                <label htmlFor="email" className="form-label">
+                  Correo
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="email"
+                  id="email"
+                  value={formulario.email}
+                  onChange={handleChangeFormulario}
+                />
+              </div>
 
-          <div className="mb-3">
-            <label htmlFor="lastNameUser" className="form-label">
-              Apellido
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="lastNameUser"
-              id="lastNameUser"
-              value={formulario.lastNameUser}
-              onChange={handleChangeFormulario}
-            />
+              <button type="submit" className="btn btn-primary">
+                Agregar
+              </button>
+            </form>
           </div>
-          <div className="mb-3">
-            <label htmlFor="user" className="form-label">
-              Usuario
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="user"
-              id="user"
-              value={formulario.user}
-              onChange={handleChangeFormulario}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Correo
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="email"
-              id="email"
-              value={formulario.email}
-              onChange={handleChangeFormulario}
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary">
-            Agregar
-          </button>
-        </form>
+          <div className="col-md-4"></div>
+        </div>
       </div>
     </div>
   );

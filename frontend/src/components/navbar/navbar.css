@@ -1,0 +1,12 @@
+:root {
+    --color-text: #0047AB;
+    --font-size-nav: .96rem;
+    --color-bg-translucent: rgba(255, 255, 255);
+
+}
+
+.text-nav{
+    color: var(--color-text) ;
+    font-size: var(--font-size-nav);
+    background-color: var(--color-bg-translucent);
+}

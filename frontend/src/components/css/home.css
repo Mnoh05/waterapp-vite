@@ -1,0 +1,154 @@
+:root {
+    --color-text: #0047AB;
+    --font-size-home: 1rem
+}
+
+.text{
+    color: var(--color-text);
+}
+
+.text-nav{
+    font-size: var(--font-size-home);
+}
+
+.contenedor{
+    padding: 1rem 1rem;
+}
+
+.btn-chico-azul {
+  background-color: #0047ab;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none; 
+  transition: background 0.3s ease;
+  border: none;
+  display: block;
+  width: fit-content;
+}
+
+.btn-chico-azul:hover {
+  background-color: #003b99;
+  text-decoration: none;
+}
+
+.btn-chico-azul:active {
+  background-color: #002f80;
+}
+
+.card-translucida {
+  background: rgba(255, 255, 255, 0.6); /* blanco translúcido */
+  backdrop-filter: blur(12px);          /* efecto borroso detrás */
+  -webkit-backdrop-filter: blur(12px);  /* soporte Safari */
+  border-radius: 12px;                  /* bordes redondeados */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* borde sutil */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);  /* sombra suave */
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto al pasar el mouse */
+.card-translucida:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Estilo general de la tabla */
+.table-custom {
+  border-collapse: separate;
+  border-spacing: 0 8px; /* separación entre filas */
+  width: 100%;
+  background: white;
+  border-radius: 2px;
+}
+
+.table-custom thead th,
+.table-custom tbody td {
+  text-align: left;
+  background-color: #f8f9fa;
+  font-weight: 600;
+  font-size: 14px;
+  color: #495057;
+  border: none;
+  padding: 12px;
+  text-align: left;
+}
+
+.table-custom tbody tr {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.table-custom tbody td {
+  padding: 12px;
+  border: none;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Dar bordes redondeados a cada fila */
+.table-custom tbody tr td:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.table-custom tbody tr td:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* Etiquetas de estado */
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status.active {
+  background-color: #d4f7d4;
+  color: #2e7d32;
+}
+
+.status.inactive {
+  background-color: #eee;
+  color: #777;
+}
+
+.status.prospect {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+/* Rangos de empleados con colores */
+.range {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.range.blue {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.range.green {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.range.orange {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.range.purple {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
