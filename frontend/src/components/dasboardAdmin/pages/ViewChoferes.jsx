@@ -3,11 +3,24 @@ import Navbar from "../../navbar/Navbar";
 import { useAuth } from "../../hooks/authContext.jsx";
 import { Link } from "react-router-dom";
 import "../../css/home.css";
+import { useState } from "react";
+import ModalDelete from "./ModalDelete.jsx";
 
 const ViewChoferes = () => {
   const { choferes } = useAuth();
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState([]);
+  const [mostrarModal, setMostrarModal] = useState(false);
 
-  console.log(choferes);
+  const abrirModal = (id, usuario, apellido) => {
+    const confirmar = window.confirm(
+      "¿Seguro que desea eliminar este usuario?"
+    );
+    if (confirmar) {
+      setUsuarioSeleccionado({ id, usuario, lastNameUser: apellido });
+      setMostrarModal(true);
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -37,6 +50,7 @@ const ViewChoferes = () => {
               <th>Nombre</th>
               <th>Correo</th>
               <th>Usuario</th>
+              <th>Eliminar</th>
             </tr>
           </thead>
           <tbody>
@@ -46,10 +60,24 @@ const ViewChoferes = () => {
                 <td>{item.nameUser + " " + item.lastNameUser} </td>
                 <td>{item.email}</td>
                 <td>{item.user}</td>
+                <td>
+                  <i
+                    className="bi bi-trash"
+                    style={{ cursor: "pointer", color: "red" }}
+                    onClick={() =>
+                      abrirModal(item.id, item.nameUser, item.lastNameUser)
+                    }
+                  ></i>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <ModalDelete
+          mostrar={mostrarModal}
+          onClose={() => setMostrarModal(false)}
+          usuario={usuarioSeleccionado}
+        />
       </div>
     </div>
   );

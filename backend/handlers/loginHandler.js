@@ -67,4 +67,21 @@ const allUsersChoferes = async () => {
   }
 };
 
-module.exports = { getUserLogin, createUser, changePassword, allUsersChoferes };
+const deleteUser = async (userId) => {
+  try {
+    const deletedUser = await userModel.destroy({
+      where: { id: userId },
+    });
+
+    if (deletedUser === 0) {
+      return `No se encontró ningún usuario con el ID ${userId}`;
+    }
+
+    return `Usuario con ID ${userId} eliminado correctamente`;
+  } catch (error) {
+    return error.message;
+  }
+};
+
+
+module.exports = { getUserLogin, createUser, changePassword, allUsersChoferes, deleteUser };

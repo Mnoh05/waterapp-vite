@@ -1,6 +1,6 @@
 
 const jwt = require("jsonwebtoken");
-const { createUser, getUserLogin, changePassword, allUsersChoferes} = require ('../handlers/loginHandler.js')
+const { createUser, getUserLogin, changePassword, allUsersChoferes, deleteUser} = require ('../handlers/loginHandler.js')
 const { userModel } = require("../config/db.js"); // Importa el modelo de usuario desde la configuración de la base de datos.
 const bcrypt = require("bcrypt");
 
@@ -86,4 +86,21 @@ const resetPassword = async (req, res) => {
   
 }
 
-module.exports = { login, createNewUser, resetPassword, allUserChofer };
+const deleteUserController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id, " entrando en controller, des eliminar controller usuario")
+
+    const result = await deleteUser(id);
+
+    if (result.includes("No se encontró")) {
+      return res.status(404).json({ message: result });
+    }
+    return res.status(200).json({ message: result });
+  } catch (error) {
+    return res.status(500).json({ message: "Error al eliminar el usuario", error: error.message });
+  }
+};
+
+
+module.exports = { login, createNewUser, resetPassword, allUserChofer, deleteUserController};
